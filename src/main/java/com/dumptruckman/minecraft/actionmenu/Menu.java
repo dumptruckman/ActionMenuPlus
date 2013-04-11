@@ -2,25 +2,24 @@ package com.dumptruckman.minecraft.actionmenu;
 
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public class Menu {
+public class Menu implements MenuItem {
 
-    @NotNull
-    private final MenuSelector.SelectorMode selectorMode;
+    private final boolean multiSelection = false;
     @NotNull
     private final Map<CommandSender, MenuSelector> menuSelectorMap;
     @NotNull
     private MenuModel model;
 
-    Menu(@NotNull final MenuSelector.SelectorMode selectorMode, @NotNull final MenuModel model) {
-        this.selectorMode = selectorMode;
+    Menu(@NotNull final MenuModel model) {
         this.model = model;
-        if (selectorMode == MenuSelector.SelectorMode.SINGLE_SELECTOR) {
+        if (!multiSelection) {
             Map<CommandSender, MenuSelector> map = new HashMap<CommandSender, MenuSelector>(1);
             map.put(null, null);
             menuSelectorMap = Collections.unmodifiableMap(map);
@@ -29,9 +28,18 @@ public class Menu {
         }
     }
 
+    @Nullable
+    public MenuItem getSelectedItem(@NotNull final CommandSender sender) {
+        return getSelector(sender).getSelectedItem();
+    }
+
+    public int getSelectedIndex(@NotNull final CommandSender sender) {
+        return getSelector(sender).getSelectedIndex();
+    }
+
     @NotNull
-    public MenuSelector getSelector(@NotNull final CommandSender sender) {
-        if (selectorMode == MenuSelector.SelectorMode.SINGLE_SELECTOR) {
+    protected MenuSelector getSelector(@NotNull final CommandSender sender) {
+        if (!multiSelection) {
             return menuSelectorMap.get(null);
         } else {
             return menuSelectorMap.get(sender);
@@ -46,4 +54,6 @@ public class Menu {
     public void setModel(@NotNull final MenuModel model) {
         this.model = model;
     }
+
+
 }

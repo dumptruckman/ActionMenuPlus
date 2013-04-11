@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Observable;
 
-public class MenuModel extends Observable implements List<MenuItem> {
+public class MenuModel extends Observable {
 
     private final List<MenuItem> contents;
 
@@ -21,77 +21,76 @@ public class MenuModel extends Observable implements List<MenuItem> {
         this.contents = backingList;
     }
 
-    @Override
     public int size() {
         return contents.size();
     }
 
-    @Override
     public boolean isEmpty() {
         return contents.isEmpty();
     }
 
-    @Override
     public boolean contains(@NotNull final Object o) {
         return contents.contains(o);
     }
 
-    @NotNull
-    @Override
-    public Iterator<MenuItem> iterator() {
-        return contents.iterator();
-    }
-
-    @NotNull
-    @Override
-    public Object[] toArray() {
-        return contents.toArray();
-    }
-
-    @NotNull
-    @Override
-    public <T> T[] toArray(@NotNull final T[] a) {
-        return contents.toArray(a);
-    }
-
-    @Override
     public boolean add(@NotNull final MenuItem menuItem) {
-        return contents.add(menuItem);
+        try {
+            return contents.add(menuItem);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public boolean remove(@NotNull final Object o) {
-        return contents.remove(o);
+        try {
+            return contents.remove(o);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public boolean containsAll(@NotNull final Collection<?> c) {
         return contents.containsAll(c);
     }
 
-    @Override
     public boolean addAll(@NotNull final Collection<? extends MenuItem> c) {
-        return contents.addAll(c);
+        try {
+            return contents.addAll(c);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public boolean addAll(final int index, @NotNull final Collection<? extends MenuItem> c) {
-        return contents.addAll(index, c);
+        try {
+            return contents.addAll(index, c);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public boolean removeAll(@NotNull final Collection<?> c) {
-        return contents.removeAll(c);
+        try {
+            return contents.removeAll(c);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public boolean retainAll(@NotNull final Collection<?> c) {
-        return contents.retainAll(c);
+        try {
+            return contents.retainAll(c);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public void clear() {
-        contents.clear();
+        try {
+            contents.clear();
+        } finally {
+            change();
+        }
     }
 
     @Override
@@ -105,53 +104,46 @@ public class MenuModel extends Observable implements List<MenuItem> {
     }
 
     @NotNull
-    @Override
     public MenuItem get(final int index) {
         return contents.get(index);
     }
 
     @NotNull
-    @Override
     public MenuItem set(final int index, @NotNull final MenuItem element) {
-        return contents.set(index, element);
+        try {
+            return contents.set(index, element);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public void add(final int index, @NotNull final MenuItem element) {
-        contents.add(index, element);
+        try {
+            contents.add(index, element);
+        } finally {
+            change();
+        }
     }
 
     @NotNull
-    @Override
     public MenuItem remove(final int index) {
-        return contents.remove(index);
+        try {
+            return contents.remove(index);
+        } finally {
+            change();
+        }
     }
 
-    @Override
     public int indexOf(@NotNull final Object o) {
         return contents.indexOf(o);
     }
 
-    @Override
     public int lastIndexOf(@NotNull final Object o) {
         return contents.lastIndexOf(o);
     }
 
-    @NotNull
-    @Override
-    public ListIterator<MenuItem> listIterator() {
-        return contents.listIterator();
-    }
-
-    @NotNull
-    @Override
-    public ListIterator<MenuItem> listIterator(final int index) {
-        return contents.listIterator(index);
-    }
-
-    @NotNull
-    @Override
-    public List<MenuItem> subList(final int fromIndex, final int toIndex) {
-        return contents.subList(fromIndex, toIndex);
+    private void change() {
+        this.setChanged();
+        this.notifyObservers();
     }
 }

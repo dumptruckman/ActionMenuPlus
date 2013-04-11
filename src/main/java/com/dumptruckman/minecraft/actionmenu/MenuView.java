@@ -1,10 +1,11 @@
 package com.dumptruckman.minecraft.actionmenu;
 
+import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public interface MenuView {
 
-    void displayMenu(@NotNull final Menu menu);
+    void showMenu(@NotNull final Menu menu, @NotNull final CommandSender viewer);
 
     @NotNull
     Menu getMenu();
