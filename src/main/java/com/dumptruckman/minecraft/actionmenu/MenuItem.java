@@ -1,11 +1,13 @@
 package com.dumptruckman.minecraft.actionmenu;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public interface MenuItem {
 
-    //void performAction(@NotNull final CommandSender sender);
+    void performAction(@NotNull final Player sender);
 
-    //boolean isSelectable();
+    boolean isSelectable();
+
+    void setSelectable(final boolean selectable);
 }
