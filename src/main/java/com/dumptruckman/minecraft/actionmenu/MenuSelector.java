@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Observable;
 import java.util.Observer;
 
-class MenuSelector implements Observer {
+public class MenuSelector implements Observer {
 
     @NotNull
     private final MenuModel model;
@@ -19,7 +19,7 @@ class MenuSelector implements Observer {
     }
 
     @NotNull
-    MenuModel getModel() {
+    public MenuModel getModel() {
         return model;
     }
 
@@ -51,6 +51,9 @@ class MenuSelector implements Observer {
 
     @Nullable
     MenuItem getSelectedItem() {
+        if (index >= 0 && index < getModel().size()) {
+            return model.get(index);
+        }
         return null;
     }
 

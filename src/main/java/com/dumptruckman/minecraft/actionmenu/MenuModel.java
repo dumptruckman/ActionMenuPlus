@@ -13,7 +13,7 @@ public class MenuModel extends Observable {
 
     private final List<MenuItem> contents;
 
-    MenuModel() {
+    public MenuModel() {
         this(new ArrayList<MenuItem>());
     }
 
@@ -145,5 +145,12 @@ public class MenuModel extends Observable {
     private void change() {
         this.setChanged();
         this.notifyObservers();
+    }
+
+    @Override
+    public String toString() {
+        return "MenuModel{" +
+                "contents=" + contents +
+                '}';
     }
 }

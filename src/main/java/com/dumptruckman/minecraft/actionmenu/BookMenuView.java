@@ -1,19 +1,19 @@
 package com.dumptruckman.minecraft.actionmenu;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.jetbrains.annotations.NotNull;
 
-public class BookMenuView extends MenuView {
+public class BookMenuView implements MenuView {
 
     final ItemStack bookItem;
     final BookMeta bookMeta;
     final int pageNumber;
 
-    public BookMenuView(@NotNull final Menu menu, @NotNull final ItemStack item, final int pageNumber) {
-        super(menu);
+    public BookMenuView(@NotNull final ItemStack item, final int pageNumber) {
         if (item.getType() != Material.WRITTEN_BOOK) {
             throw new IllegalArgumentException("Item must be written book!");
         }
@@ -24,8 +24,26 @@ public class BookMenuView extends MenuView {
 
     @Override
     public void showMenu(@NotNull final Menu menu, @NotNull final Player viewer) {
-
-
+        final StringBuilder builder = new StringBuilder();
+        builder.append(menu.getText());
+        for (int i = 0; i < menu.getModel().size(); i++) {
+            if (builder.length() != 0) {
+                builder.append("\n");
+            }
+            final MenuItem item = menu.getModel().get(i);
+            if (menu.getSelectedIndex(viewer) == i) {
+                builder.append(ChatColor.BLACK).append("> ");
+            } else {
+                builder.append("  ");
+            }
+            if (!item.isSelectable()) {
+                builder.append(ChatColor.GRAY);
+            } else if (menu.getSelectedIndex(viewer) != i) {
+                builder.append(ChatColor.BLACK);
+            }
+            builder.append(item.getText());
+        }
+        bookMeta.setPage(pageNumber, builder.toString());
         bookItem.setItemMeta(bookMeta);
     }
 }

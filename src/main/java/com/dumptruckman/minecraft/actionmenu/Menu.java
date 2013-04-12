@@ -1,29 +1,24 @@
 package com.dumptruckman.minecraft.actionmenu;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public class Menu implements MenuItem {
+public class Menu extends MenuItem {
 
     private final boolean multiSelection = false;
     @NotNull
     private final Map<Player, MenuSelector> menuSelectorMap;
     @NotNull
     private MenuModel model;
-    @NotNull
-    protected final MenuItem backingItem;
 
-
-    Menu(@NotNull final MenuModel model, @NotNull final MenuItem backingItem) {
+    public Menu(@NotNull final MenuModel model, @NotNull final String menuTitle) {
+        super(menuTitle, Action.NO_ACTION);
         this.model = model;
-        this.backingItem = backingItem;
         if (!multiSelection) {
             menuSelectorMap = new HashMap<Player, MenuSelector>(1);
         } else {
@@ -62,7 +57,7 @@ public class Menu implements MenuItem {
     }
 
     @NotNull
-    protected MenuSelector getSelector(@NotNull final Player sender) {
+    public MenuSelector getSelector(@NotNull final Player sender) {
         if (!multiSelection) {
             return menuSelectorMap.get(null);
         } else {
@@ -81,20 +76,5 @@ public class Menu implements MenuItem {
     public void setModel(@NotNull final MenuModel model) {
         this.model = model;
         this.setupSelectors(model);
-    }
-
-    @Override
-    public void performAction(@NotNull final Player sender) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean isSelectable() {
-        return backingItem.isSelectable();
-    }
-
-    @Override
-    public void setSelectable(final boolean selectable) {
-        backingItem.setSelectable(selectable);
     }
 }
