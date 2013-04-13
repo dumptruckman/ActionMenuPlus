@@ -36,28 +36,28 @@ public class Menu extends MenuItem {
     }
 
     @Nullable
-    public MenuItem getSelectedItem(@NotNull final Player sender) {
+    public final MenuItem getSelectedItem(@NotNull final Player sender) {
         return getSelector(sender).getSelectedItem();
     }
 
-    public int getSelectedIndex(@NotNull final Player sender) {
+    public final int getSelectedIndex(@NotNull final Player sender) {
         return getSelector(sender).getSelectedIndex();
     }
 
-    public void selectNext(@NotNull final Player sender) {
+    public final void selectNext(@NotNull final Player sender) {
         getSelector(sender).selectNext();
     }
 
-    public void selectPrevious(@NotNull final Player sender) {
+    public final void selectPrevious(@NotNull final Player sender) {
         getSelector(sender).selectPrevious();
     }
 
-    public void selectIndex(@NotNull final Player sender, final int index) {
+    public final void selectIndex(@NotNull final Player sender, final int index) {
         getSelector(sender).selectIndex(index);
     }
 
     @NotNull
-    public MenuSelector getSelector(@NotNull final Player sender) {
+    private MenuSelector getSelector(@NotNull final Player sender) {
         if (!multiSelection) {
             return menuSelectorMap.get(null);
         } else {
@@ -69,11 +69,11 @@ public class Menu extends MenuItem {
     }
 
     @NotNull
-    public MenuModel getModel() {
+    public final MenuModel getModel() {
         return model;
     }
 
-    public void setModel(@NotNull final MenuModel model) {
+    public final void setModel(@NotNull final MenuModel model) {
         this.model = model;
         this.setupSelectors(model);
     }

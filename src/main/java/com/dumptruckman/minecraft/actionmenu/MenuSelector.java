@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Observable;
 import java.util.Observer;
 
-public class MenuSelector implements Observer {
+class MenuSelector implements Observer {
 
     @NotNull
     private final MenuModel model;
