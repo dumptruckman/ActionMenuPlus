@@ -19,7 +19,7 @@ import java.util.Observer;
  * the last selectable item.  However, if {@link #isWrapping()} returns false, instead of the selection rolling over in
  * the previous circumstances, it will instead remain at the first or last item.
  */
-final class MenuSelector implements Observer {
+public final class MenuSelector implements Observer {
 
     @NotNull
     private final MenuModel model;

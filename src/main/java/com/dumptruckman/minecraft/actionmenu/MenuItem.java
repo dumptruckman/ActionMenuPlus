@@ -4,6 +4,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
+import java.util.Observable;
+
 /**
  * Represents an item in a Menu, selectable or otherwise, that is typically associated with an {@link Action}.
  * <p/>
@@ -20,20 +23,36 @@ import org.jetbrains.annotations.Nullable;
  * selectable should typically be visually represented as such to avoid confusion by the end-user.  A non-selectable
  * MenuItem cannot be set as the selected MenuItem of a Menu by any means.
  * <p/>
- * <strong>To obtain a new MenuItem see {@link Menus#newMenuItem(String, Action)}.</strong>
+ * {@link java.util.Observer}s of this MenuItem will be notified any time a change occurs that may require a
+ * {@link MenuView} to update via {@link MenuView#showMenu(Menu, org.bukkit.entity.Player)}.
  */
-public class MenuItem {
+public class MenuItem extends Observable implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Nullable
-    private Action itemAction;
-
+    private Action itemAction = null;
     private boolean selectable = true;
     @NotNull
     private String text;
 
-    protected MenuItem(@NotNull final String text, @Nullable final Action action) {
+    /**
+     * Constructs a MenuItem with empty text.
+     * <p/>
+     * It is recommended that you set the text with {@link #setText(String)} so {@link MenuView} displays this item
+     * properly.
+     */
+    public MenuItem() {
+        this("");
+    }
+
+    /**
+     * Constructs a MenuItem with the given text.
+     *
+     * @param text the text this MenuItem will be displayed with.
+     */
+    public MenuItem(@NotNull final String text) {
         this.text = text;
-        this.itemAction = action;
     }
 
     /**
@@ -54,7 +73,7 @@ public class MenuItem {
      *
      * @return the action for this MenuItem or null if no action should be performed.
      */
-    public final Action getAction() {
+    public Action getAction() {
         return itemAction;
     }
 
@@ -64,9 +83,12 @@ public class MenuItem {
      *
      * @param action the action this MenuItem should perform when {@link #performAction(org.bukkit.entity.Player)} is
      *               called.
+     * @return this MenuItem for chaining.
      */
-    public final void setAction(@NotNull final Action action) {
+    @NotNull
+    public MenuItem setAction(@NotNull final Action action) {
         this.itemAction = action;
+        return this;
     }
 
     /**
@@ -79,7 +101,7 @@ public class MenuItem {
      *
      * @return true if this item is selectable.
      */
-    public final boolean isSelectable() {
+    public boolean isSelectable() {
         return selectable;
     }
 
@@ -87,9 +109,12 @@ public class MenuItem {
      * Sets whether or not this MenuItem is selectable.
      *
      * @param selectable whether or not this MenuItem will be selectable.
+     * @return this MenuItem for chaining.
      */
-    public final void setSelectable(final boolean selectable) {
+    @NotNull
+    public MenuItem setSelectable(final boolean selectable) {
         this.selectable = selectable;
+        return this;
     }
 
     /**
@@ -98,16 +123,20 @@ public class MenuItem {
      * @return the text that a {@link MenuView} should use to display this MenuItem.
      */
     @NotNull
-    public final String getText() {
+    public String getText() {
         return text;
     }
 
     /**
      * Sets the text that a {@link MenuView} should use to display this MenuItem.
+     *
      * @param text the text that a {@link MenuView} should use to display this MenuItem.
+     * @return this MenuItem for chaining.
      */
-    public final void setText(@NotNull final String text) {
+    @NotNull
+    public MenuItem setText(@NotNull final String text) {
         this.text = text;
+        return this;
     }
 
     /** {@inheritDoc} */

@@ -1,5 +1,8 @@
-package com.dumptruckman.minecraft.actionmenu;
+package com.dumptruckman.minecraft.actionmenu.views;
 
+import com.dumptruckman.minecraft.actionmenu.Menu;
+import com.dumptruckman.minecraft.actionmenu.MenuItem;
+import com.dumptruckman.minecraft.actionmenu.MenuView;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

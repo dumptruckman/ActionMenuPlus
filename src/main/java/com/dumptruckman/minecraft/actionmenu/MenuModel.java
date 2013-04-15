@@ -2,12 +2,15 @@ package com.dumptruckman.minecraft.actionmenu;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Observable;
+import java.util.Observer;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Contains the contents (menu items) of a Menu, selectable or otherwise.
@@ -16,14 +19,42 @@ import java.util.Observable;
  * any time any changes to the list contents occur.
  * <p/>
  * The specific behavior of the list is that of an {@link ArrayList}.
- * <p/>
- * <strong>To obtain a new MenuModel see the factory methods available in the {@link Menus} class.</strong>
  */
-public final class MenuModel extends Observable implements List<MenuItem> {
+public final class MenuModel extends Observable implements List<MenuItem>, Serializable {
 
-    private final List<MenuItem> contents;
+    private static final long serialVersionUID = 1L;
 
-    MenuModel(@NotNull final List<MenuItem> backingList) {
+    @NotNull
+    private List<MenuItem> contents;
+
+    /**
+     * Constructs an empty model with an initial capacity of ten.
+     */
+    public MenuModel() {
+        this(new ArrayList<MenuItem>());
+    }
+
+    /**
+     * Constructs a model containing the items of the specified collection, in the order they are returned by the
+     * collection's iterator.
+     *
+     * @param initialContents the collection whose items are to be placed in this model.
+     */
+    public MenuModel(@NotNull final java.util.Collection<MenuItem> initialContents) {
+        this(new ArrayList<MenuItem>(initialContents));
+    }
+
+    /**
+     * Constructs an empty model with the specified initial capacity.
+     *
+     * @param initialCapacity the initial capacity of the model.
+     * @throws IllegalArgumentException if the initial capacity is negative.
+     */
+    public MenuModel(final int initialCapacity) {
+        this(new ArrayList<MenuItem>(initialCapacity));
+    }
+
+    private MenuModel(@NotNull final List<MenuItem> backingList) {
         this.contents = backingList;
     }
 
@@ -48,21 +79,21 @@ public final class MenuModel extends Observable implements List<MenuItem> {
     /** {@inheritDoc} */
     @Override
     public boolean add(@NotNull final MenuItem menuItem) {
-        try {
-            return contents.add(menuItem);
-        } finally {
+        if (contents.add(menuItem)) {
             change();
+            return true;
         }
+        return false;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean remove(@NotNull final Object o) {
-        try {
-            return contents.remove(o);
-        } finally {
+        if (contents.remove(o)) {
             change();
+            return true;
         }
+        return false;
     }
 
     /** {@inheritDoc} */
@@ -74,49 +105,48 @@ public final class MenuModel extends Observable implements List<MenuItem> {
     /** {@inheritDoc} */
     @Override
     public boolean addAll(@NotNull final Collection<? extends MenuItem> c) {
-        try {
-            return contents.addAll(c);
-        } finally {
+        if (contents.addAll(c)) {
             change();
+            return true;
         }
+        return false;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean addAll(final int index, @NotNull final Collection<? extends MenuItem> c) {
-        try {
-            return contents.addAll(index, c);
-        } finally {
+        if (contents.addAll(index, c)) {
             change();
+            return true;
         }
+        return false;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean removeAll(@NotNull final Collection<?> c) {
-        try {
-            return contents.removeAll(c);
-        } finally {
+        if (contents.removeAll(c)) {
             change();
+            return true;
         }
+        return false;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean retainAll(@NotNull final Collection<?> c) {
-        try {
-            return contents.retainAll(c);
-        } finally {
+        if (contents.retainAll(c)) {
             change();
+            return true;
         }
+        return false;
     }
 
     /** {@inheritDoc} */
     @Override
     public void clear() {
-        try {
+        if (!contents.isEmpty()) {
             contents.clear();
-        } finally {
             change();
         }
     }
@@ -144,32 +174,25 @@ public final class MenuModel extends Observable implements List<MenuItem> {
     @Override
     @NotNull
     public MenuItem set(final int index, @NotNull final MenuItem element) {
-        try {
-            return contents.set(index, element);
-        } finally {
-            change();
-        }
+        final MenuItem result = contents.set(index, element);
+        change();
+        return result;
     }
 
     /** {@inheritDoc} */
     @Override
     public void add(final int index, @NotNull final MenuItem element) {
-        try {
-            contents.add(index, element);
-        } finally {
-            change();
-        }
+        contents.add(index, element);
+        change();
     }
 
     /** {@inheritDoc} */
     @Override
     @NotNull
     public MenuItem remove(final int index) {
-        try {
-            return contents.remove(index);
-        } finally {
-            change();
-        }
+        final MenuItem result = contents.remove(index);
+        change();
+        return result;
     }
 
     /** {@inheritDoc} */
@@ -221,7 +244,7 @@ public final class MenuModel extends Observable implements List<MenuItem> {
     /** {@inheritDoc} */
     @NotNull
     @Override
-    public Iterator<MenuItem> iterator() {
+    public ListIterator<MenuItem> iterator() {
         return new ModelIterator(contents.listIterator());
     }
 

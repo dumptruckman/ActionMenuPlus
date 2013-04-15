@@ -1,6 +1,7 @@
 package com.dumptruckman.minecraft.actionmenu.plugin;
 
 import com.dumptruckman.minecraft.actionmenu.*;
+import com.dumptruckman.minecraft.actionmenu.views.OneAtATimeSignView;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
@@ -42,7 +43,7 @@ public class TestPlugin extends JavaPlugin implements Listener {
                 if (event.getBlock().getState() instanceof Sign) {
                     sign = (Sign) event.getBlock().getState();
                     if (view == null) {
-                        view = new SignMenuView(sign);
+                        view = new OneAtATimeSignView(sign);
                     }
                     view.showMenu(menu, event.getPlayer());
                 }
