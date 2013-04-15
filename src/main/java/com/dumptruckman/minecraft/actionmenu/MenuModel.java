@@ -10,18 +10,18 @@ import java.util.ListIterator;
 import java.util.Observable;
 
 /**
- * Contains the contents of a Menu.
+ * Contains the contents (menu items) of a Menu, selectable or otherwise.
  * <p/>
  * This class functions functions as an {@link Observable} {@link List} of {@link MenuItem}s that will notify observers
  * any time any changes to the list contents occur.
+ * <p/>
+ * The specific behavior of the list is that of an {@link ArrayList}.
+ * <p/>
+ * <strong>To obtain a new MenuModel see the factory methods available in the {@link Menus} class.</strong>
  */
-public class MenuModel extends Observable implements List<MenuItem> {
+public final class MenuModel extends Observable implements List<MenuItem> {
 
     private final List<MenuItem> contents;
-
-    public MenuModel() {
-        this(new ArrayList<MenuItem>());
-    }
 
     MenuModel(@NotNull final List<MenuItem> backingList) {
         this.contents = backingList;
@@ -239,6 +239,9 @@ public class MenuModel extends Observable implements List<MenuItem> {
         return contents.toArray(a);
     }
 
+    /**
+     * A private implementation of ListIterator that notifies observers of the MenuModel of any content changes.
+     */
     private class ModelIterator implements ListIterator<MenuItem> {
 
         @NotNull

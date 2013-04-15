@@ -19,9 +19,9 @@ public class TestPlugin extends JavaPlugin implements Listener {
     private MenuView view;
     private Sign sign;
     {
-        menu.getModel().add(MenuItem.createItem("Explode\nSome\nShit", Action.NO_ACTION));
-        menu.getModel().add(MenuItem.createItem("Option 2", Action.NO_ACTION));
-        menu.getModel().add(MenuItem.createItem("Item with\nSome\n" + ChatColor.GOLD + "Color!\n" + ChatColor.RED + ChatColor.MAGIC + "WEEEE!!", Action.NO_ACTION));
+        menu.getModel().add(MenuItem.createItem("Explode\nSome\nShit", null));
+        menu.getModel().add(MenuItem.createItem("Option 2", null));
+        menu.getModel().add(MenuItem.createItem("Item with\nSome\n" + ChatColor.GOLD + "Color!\n" + ChatColor.RED + ChatColor.MAGIC + "WEEEE!!", null));
     }
 
     @Override

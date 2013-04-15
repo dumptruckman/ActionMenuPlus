@@ -6,69 +6,148 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Observable;
 import java.util.Observer;
 
-class MenuSelector implements Observer {
+/**
+ * This class is responsible for handling the current selection of a {@link MenuModel}.
+ * <p/>
+ * A {@link MenuModel} may have multiple selectors to track selections on it for different users though a MenuSelector
+ * will only ever track one {@link MenuModel}.
+ * <p/>
+ * A MenuSelector's selection process for {@link #selectPrevious()} and {@link #selectNext()} is determined by the
+ * result of {@link #isWrapping()}.  If {@link #isWrapping()} returns true, calling {@link #selectNext()} while on the
+ * last selectable item of the model will cause the selection to roll over to the first selectable item, while calling
+ * {@link #selectPrevious()} while on the first selectable item of the model will cause the selection to roll over to
+ * the last selectable item.  However, if {@link #isWrapping()} returns false, instead of the selection rolling over in
+ * the previous circumstances, it will instead remain at the first or last item.
+ */
+final class MenuSelector implements Observer {
 
     @NotNull
     private final MenuModel model;
+    private final boolean wrapping;
 
     private int index = 0;
 
-    MenuSelector(@NotNull final MenuModel model) {
+    MenuSelector(@NotNull final MenuModel model, final boolean wrapping) {
         this.model = model;
+        this.wrapping = wrapping;
         this.model.addObserver(this);
     }
 
+    /**
+     * Gets the model this selector is responsible for.
+     *
+     * @return the model this selector is responsible for.
+     */
     @NotNull
     public MenuModel getModel() {
         return model;
     }
 
-    int getSelectedIndex() {
+    /**
+     * Gets the currently selected index of the model.
+     *
+     * @return the currently selected index of the model.
+     */
+    public int getSelectedIndex() {
         return index;
     }
 
-    void selectNext() {
+    /**
+     * Selects the next <em>selectable</em> item in the model, wrapping to the beginning if {@link #isWrapping()}
+     * returns true.
+     */
+    public void selectNext() {
         index++;
+        // we need to find the next selectable item
+        for (MenuItem selected = getSelectedItem(); // first check the newly selected item
+             index < getModel().size() && selected != null; // ensure it is within the bounds of the model
+             index++, selected = getSelectedItem()) { // check the next item
+            if (selected.isSelectable()) {
+                break;
+            }
+        }
+        // wrap to beginning if necessary
         if (isWrapping() && index >= getModel().size()) {
             index = 0;
         }
-        verifySelection();
+        validateIndex();
     }
 
-    void selectPrevious() {
+    /**
+     * Selects the previous <em>selectable</em> item in the model, wrapping to the end if {@link #isWrapping()}
+     * returns true.
+     */
+    public void selectPrevious() {
         index--;
+        // we need to find the previous selectable item
+        for (MenuItem selected = getSelectedItem();  // first check the newly selected item
+             index >= 0 && selected != null; // ensure it is within the bounds of the model
+             index--, selected = getSelectedItem()) { // check the previous item
+            if (selected.isSelectable()) {
+                break;
+            }
+        }
+        // wrap to end if necessary
         if (isWrapping() && index < 0) {
             index = getModel().size() - 1;
         }
-        verifySelection();
+        validateIndex();
     }
 
-    void selectIndex(final int index) {
+    /**
+     * Selects the specified index.
+     * <p/>
+     * If the specified index is outside the bounds of the model or points to a non-selectable item, this will do
+     * nothing.
+     *
+     * @param index the index to select.
+     */
+    public void selectIndex(final int index) {
         if (index >= 0 && index < getModel().size() && getModel().get(index).isSelectable()) {
             this.index = index;
         }
     }
 
+    /**
+     * Gets the currently selected menu item if any.
+     *
+     * @return the currently selected menu item or null if no item selected.
+     */
     @Nullable
-    MenuItem getSelectedItem() {
+    public MenuItem getSelectedItem() {
         if (index >= 0 && index < getModel().size()) {
             return model.get(index);
         }
         return null;
     }
 
-    boolean isWrapping() {
-        return true;
+    /**
+     * Gets whether this selector should wrap to the end of the model on {@link #selectPrevious()} and to the
+     * beginning of the model on {@link #selectNext()} or if no wrapping should occur.
+     *
+     * @return true if wrapping should occur, false otherwise.
+     */
+    public boolean isWrapping() {
+        return wrapping;
     }
 
+    /**
+     * This should be called when the contents of this selector's model is altered in any way.
+     *
+     * @param o this should be the same model returned by {@link #getModel()} or this will do nothing.
+     * @param arg this argument is ignored.
+     */
     @Override
     public void update(final Observable o, final Object arg) {
         if (o == model) {
-            verifySelection();
+            validateIndex();
         }
     }
 
-    private void verifySelection() {
+    /**
+     * Ensures that the current index is valid.
+     */
+    private void validateIndex() {
         int size = getModel().size();
         if (index >= 0 && index < size && getModel().get(index).isSelectable()) {
             // selection is fine

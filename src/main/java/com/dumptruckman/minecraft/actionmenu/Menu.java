@@ -8,17 +8,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+/**
+ * Represents a menu.
+ * <p/>
+ * This is the main class for menus in ActionMenuPlus.  This and {@link MenuView} are the only classes you must track
+ * externally.
+ * <p/>
+ * All of the methods for manipulating the menu you should need are available here.
+ */
 public class Menu extends MenuItem {
 
-    private final boolean multiSelection = false;
+    private final boolean multiSelection;
+    private final boolean wrapSelections;
     @NotNull
     private final Map<Player, MenuSelector> menuSelectorMap;
     @NotNull
     private MenuModel model;
 
-    public Menu(@NotNull final MenuModel model, @NotNull final String menuTitle) {
-        super(menuTitle, Action.NO_ACTION);
+    Menu(@NotNull final MenuModel model, @NotNull final String menuTitle, final boolean multiSelection, final boolean wrapSelections) {
+        super(menuTitle, null);
         this.model = model;
+        this.multiSelection = multiSelection;
+        this.wrapSelections = wrapSelections;
         if (!multiSelection) {
             menuSelectorMap = new HashMap<Player, MenuSelector>(1);
         } else {
@@ -29,7 +40,7 @@ public class Menu extends MenuItem {
 
     private void setupSelectors(@NotNull final MenuModel model) {
         if (!multiSelection) {
-            menuSelectorMap.put(null, new MenuSelector(model));
+            menuSelectorMap.put(null, new MenuSelector(model, wrapSelections));
         } else {
             menuSelectorMap.clear();
         }
@@ -62,7 +73,7 @@ public class Menu extends MenuItem {
             return menuSelectorMap.get(null);
         } else {
             if (!menuSelectorMap.containsKey(sender)) {
-                menuSelectorMap.put(sender, new MenuSelector(model));
+                menuSelectorMap.put(sender, new MenuSelector(model, wrapSelections));
             }
             return menuSelectorMap.get(sender);
         }
