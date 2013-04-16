@@ -36,7 +36,7 @@ import java.util.Observable;
  * important to make sure that at minimum a MenuItem has a non-empty string set with {@link #MenuItem(String)} or
  * {@link #setText(String)} as almost all menu mediums are capable of displaying text in some way.
  * <p/>
- * Menu items are capable of performing pre-defined tasks by calling the {@link #performAction(org.bukkit.entity.Player)}.
+ * Menu items are capable of performing pre-defined tasks by calling {@link #performAction(org.bukkit.entity.Player)}.
  * The tasks performed is defined by the {@link Action} returned by {@link #getAction()}.
  * <p/>
  * This MenuItem may or may not be selectable as indicated by {@link #isSelectable()}.  A MenuItem that is not
