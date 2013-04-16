@@ -5,10 +5,14 @@
  */
 package com.dumptruckman.minecraft.actionmenu;
 
+import org.bukkit.Effect;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
@@ -26,6 +30,10 @@ import java.util.WeakHashMap;
  * All of the methods for manipulating the selection of the menu are available here.  Additionally, some simple methods
  * exist here for manipulating the model of the menu.  For more advanced model operations refer to the model returned
  * by {@link #getModel()}.
+ * <p/>
+ * As Menu extends {@link MenuItem} it is important to note that a Menu may be added to the contents of another menu!
+ * Anyone implementing a {@link MenuView} should take this into considering as you may want to display a nested menu
+ * entirely differently.
  */
 public class Menu extends MenuItem implements Iterable<MenuItem> {
 
@@ -355,5 +363,50 @@ public class Menu extends MenuItem implements Iterable<MenuItem> {
         if (item != null) {
             item.performAction(user);
         }
+    }
+
+    /** {@inheritDoc} */
+    @NotNull
+    @Override
+    public Menu setAction(@NotNull final Action action) {
+        return (Menu) super.setAction(action);
+    }
+
+    /** {@inheritDoc} */
+    @NotNull
+    @Override
+    public Menu setSelectable(final boolean selectable) {
+        return (Menu) super.setSelectable(selectable);
+    }
+
+    /** {@inheritDoc} */
+    @NotNull
+    @Override
+    public Menu setText(@NotNull final String text) {
+        return (Menu) super.setText(text);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Menu setImage(@Nullable final Image image) {
+        return (Menu) super.setImage(image);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Menu setItemStack(@Nullable final ItemStack itemStack) {
+        return (Menu) super.setItemStack(itemStack);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Menu setBlock(@Nullable final Block block) {
+        return (Menu) super.setBlock(block);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Menu setEffect(@Nullable final Effect effect) {
+        return (Menu) super.setEffect(effect);    //To change body of overridden methods use File | Settings | File Templates.
     }
 }

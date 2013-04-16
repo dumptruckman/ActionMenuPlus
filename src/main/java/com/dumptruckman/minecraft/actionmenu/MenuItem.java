@@ -185,15 +185,17 @@ public class MenuItem extends Observable implements Serializable {
     }
 
     /**
-     * Sets the image to be associated with this MenuItem, if any.
+     * Sets the image to be associated with this MenuItem.
      * <p/>
      * Whether or not this image is used in displaying the menu is entirely dependent upon the {@link MenuView} used
      * to show the menu.
      *
      * @param image the image to be associated with this MenuItem or null to use no image.
+     * @return this MenuItem for chaining.
      */
-    public void setImage(@Nullable final Image image) {
+    public MenuItem setImage(@Nullable final Image image) {
         this.image = image;
+        return this;
     }
 
     /**
@@ -210,15 +212,17 @@ public class MenuItem extends Observable implements Serializable {
     }
 
     /**
-     * Sets the item stack to be associated with this MenuItem, if any.
+     * Sets the item stack to be associated with this MenuItem.
      * <p/>
      * Whether or not this item stack is used in displaying the menu is entirely dependent upon the {@link MenuView}
      * used to show the menu.
      *
      * @param itemStack the item stack to be associated with this MenuItem or null to use no item stack.
+     * @return this MenuItem for chaining.
      */
-    public void setItemStack(@Nullable final ItemStack itemStack) {
+    public MenuItem setItemStack(@Nullable final ItemStack itemStack) {
         this.itemStack = itemStack;
+        return this;
     }
 
     /**
@@ -235,15 +239,17 @@ public class MenuItem extends Observable implements Serializable {
     }
 
     /**
-     * Sets the block to be associated with this MenuItem, if any.
+     * Sets the block to be associated with this MenuItem.
      * <p/>
      * Whether or not this block is used in displaying the menu is entirely dependent upon the {@link MenuView}
      * used to show the menu.
      *
      * @param block the block to be associated with this MenuItem or null to use no block.
+     * @return this MenuItem for chaining.
      */
-    public void setBlock(@Nullable final Block block) {
+    public MenuItem setBlock(@Nullable final Block block) {
         this.block = block;
+        return this;
     }
 
     /**
@@ -260,15 +266,17 @@ public class MenuItem extends Observable implements Serializable {
     }
 
     /**
-     * Sets the effect to be associated with this MenuItem, if any.
+     * Sets the effect to be associated with this MenuItem.
      * <p/>
      * Whether or not this effect is used in displaying the menu is entirely dependent upon the {@link MenuView}
      * used to show the menu.
      *
      * @return the effect to be associated with this MenuItem or null if this menu item has no effect.
+     * @return this MenuItem for chaining.
      */
-    public void setEffect(@Nullable final Effect effect) {
+    public MenuItem setEffect(@Nullable final Effect effect) {
         this.effect = effect;
+        return this;
     }
 
     /** {@inheritDoc} */
