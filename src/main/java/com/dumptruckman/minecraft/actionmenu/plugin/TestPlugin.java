@@ -16,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class TestPlugin extends JavaPlugin implements Listener {
 
-    private final Menu menu = new Menu(new MenuModel(), "Test Menu");
+    private final Menu menu = Menu.newMenu("Test Menu");
     private MenuView view;
     private Sign sign;
     {
-        menu.getModel().add(MenuItem.createItem("Explode\nSome\nShit", null));
-        menu.getModel().add(MenuItem.createItem("Option 2", null));
-        menu.getModel().add(MenuItem.createItem("Item with\nSome\n" + ChatColor.GOLD + "Color!\n" + ChatColor.RED + ChatColor.MAGIC + "WEEEE!!", null));
+        menu.getModel().add(new MenuItem("Explode\nSome\nShit"));
+        menu.getModel().add(new MenuItem("Option 2"));
+        menu.getModel().add(new MenuItem("Item with\nSome\n" + ChatColor.GOLD + "Color!\n" + ChatColor.RED + ChatColor.MAGIC + "WEEEE!!"));
     }
 
     @Override
