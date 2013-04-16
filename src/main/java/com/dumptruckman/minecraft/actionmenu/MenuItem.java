@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Observable;
 
 /**
- * Represents an item in a Menu, selectable or otherwise, that is typically associated with an {@link Action}.
+ * An item in a Menu, selectable or otherwise, that is typically associated with an {@link Action}.
  * <p/>
  * This basic menu item is represented in a {@link Menu} with the results of {@link #getText()}.  It is possible to
  * extend this class and create items represented by other things such as images.  Doing so would also require a custom

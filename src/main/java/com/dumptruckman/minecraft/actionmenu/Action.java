@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents an action to be performed for a player.
+ * An action to be performed for a player.
  * <p/>
  * This is simply a callback interface for {@link MenuItem} to use to execute some task when the menu item is "used".
  */

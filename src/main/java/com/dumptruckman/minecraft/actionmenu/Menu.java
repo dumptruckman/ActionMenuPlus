@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * Represents a menu, which contains a menu model (the menu items) and manages the selection of menu items.
+ * A menu, which contains a menu model (the menu items) and manages the selection of menu items.
  * <p/>
  * This is the main class for menus in ActionMenuPlus.  This and {@link MenuView} are the only classes you must track
  * externally.

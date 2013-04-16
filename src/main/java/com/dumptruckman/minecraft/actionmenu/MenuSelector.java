@@ -7,7 +7,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * This class is responsible for handling the current selection of a {@link MenuModel}.
+ * This class is responsible for handling the current selection of a {@link MenuModel} and is public for reference
+ * only.
  * <p/>
  * A {@link MenuModel} may have multiple selectors to track selections on it for different users though a MenuSelector
  * will only ever track one {@link MenuModel}.

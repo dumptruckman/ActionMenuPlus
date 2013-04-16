@@ -1,3 +1,3 @@
 name: ActionMenuPlus
 main: com.dumptruckman.minecraft.actionmenu.plugin.TestPlugin
-version: 1
+version: maven-version-number
