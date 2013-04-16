@@ -10,6 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This view is quite pitiful as it is only capable of changing the book once per being opened.
+ */
 public class BookMenuView implements MenuView {
 
     final ItemStack bookItem;

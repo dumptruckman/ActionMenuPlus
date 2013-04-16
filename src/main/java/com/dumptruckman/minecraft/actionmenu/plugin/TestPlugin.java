@@ -1,6 +1,8 @@
 package com.dumptruckman.minecraft.actionmenu.plugin;
 
-import com.dumptruckman.minecraft.actionmenu.*;
+import com.dumptruckman.minecraft.actionmenu.Menu;
+import com.dumptruckman.minecraft.actionmenu.MenuItem;
+import com.dumptruckman.minecraft.actionmenu.MenuView;
 import com.dumptruckman.minecraft.actionmenu.views.OneAtATimeSignView;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
