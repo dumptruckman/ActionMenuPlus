@@ -5,21 +5,36 @@
  */
 package com.dumptruckman.minecraft.actionmenu;
 
+import org.bukkit.Effect;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.persistence.Transient;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.Observable;
 
 /**
  * An item in a Menu, selectable or otherwise, that is typically associated with an {@link Action}.
  * <p/>
- * This basic menu item is represented in a {@link Menu} with the results of {@link #getText()}.  It is possible to
- * extend this class and create items represented by other things such as images.  Doing so would also require a custom
- * {@link MenuView} that would recognize and correctly display such an item.  In such a case, {@link #getText()}
- * should still return a non-empty String so the item can be displayed on a basic {@link MenuView} which are typically
- * only capable of displaying text.
+ * A menu item has several methods that can be used to associate it visibly or audibly with a menu.
+ * These methods and what they offer are as follows:
+ * <ul>
+ *     <li>{@link #setText(String)} - A simple string</li>
+ *     <li>{@link #setImage(java.awt.Image)} - An image</li>
+ *     <li>{@link #setItemStack(org.bukkit.inventory.ItemStack)} - An item in an inventory</li>
+ *     <li>{@link #setBlock(org.bukkit.block.Block)} - A block in the world</li>
+ *     <li>{@link #setEffect(org.bukkit.Effect)} - An audio/visual effect</li>
+ * </ul>
+ * <em>(Each of the above setters have respective accessor methods)</em>
+ * <p/>
+ * How exactly a menu item is displayed is entirely up to the {@link MenuView} that is displaying the menu to a player.
+ * Not all of the methods above will actually be displayable on every medium capable of showing a menu.  As such, it is
+ * important to make sure that at minimum a MenuItem has a non-empty string set with {@link #MenuItem(String)} or
+ * {@link #setText(String)} as almost all menu mediums are capable of displaying text in some way.
  * <p/>
  * Menu items are capable of performing pre-defined tasks by calling the {@link #performAction(org.bukkit.entity.Player)}.
  * The tasks performed is defined by the {@link Action} returned by {@link #getAction()}.
@@ -40,6 +55,18 @@ public class MenuItem extends Observable implements Serializable {
     private boolean selectable = true;
     @NotNull
     private String text;
+    @Transient
+    @Nullable
+    private Image image = null;
+    @Transient
+    @Nullable
+    private ItemStack itemStack = null;
+    @Transient
+    @Nullable
+    private Block block = null;
+    @Transient
+    @Nullable
+    private Effect effect = null;
 
     /**
      * Constructs a MenuItem with empty text.
@@ -142,6 +169,106 @@ public class MenuItem extends Observable implements Serializable {
     public MenuItem setText(@NotNull final String text) {
         this.text = text;
         return this;
+    }
+
+    /**
+     * Gets the image associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this image is used in displaying the menu is entirely dependent upon the {@link MenuView} used
+     * to show the menu.
+     *
+     * @return the image associated with this MenuItem or null if this menu item has no image.
+     */
+    @Nullable
+    public Image getImage() {
+        return image;
+    }
+
+    /**
+     * Sets the image to be associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this image is used in displaying the menu is entirely dependent upon the {@link MenuView} used
+     * to show the menu.
+     *
+     * @param image the image to be associated with this MenuItem or null to use no image.
+     */
+    public void setImage(@Nullable final Image image) {
+        this.image = image;
+    }
+
+    /**
+     * Gets the item stack associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this item stack is used in displaying the menu is entirely dependent upon the {@link MenuView}
+     * used to show the menu.
+     *
+     * @return the item stack associated with this MenuItem or null if this menu item has no item stack.
+     */
+    @Nullable
+    public ItemStack getItemStack() {
+        return itemStack;
+    }
+
+    /**
+     * Sets the item stack to be associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this item stack is used in displaying the menu is entirely dependent upon the {@link MenuView}
+     * used to show the menu.
+     *
+     * @param itemStack the item stack to be associated with this MenuItem or null to use no item stack.
+     */
+    public void setItemStack(@Nullable final ItemStack itemStack) {
+        this.itemStack = itemStack;
+    }
+
+    /**
+     * Gets the block associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this block is used in displaying the menu is entirely dependent upon the {@link MenuView}
+     * used to show the menu.
+     *
+     * @return the block associated with this MenuItem or null if this menu item has no block.
+     */
+    @Nullable
+    public Block getBlock() {
+        return block;
+    }
+
+    /**
+     * Sets the block to be associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this block is used in displaying the menu is entirely dependent upon the {@link MenuView}
+     * used to show the menu.
+     *
+     * @param block the block to be associated with this MenuItem or null to use no block.
+     */
+    public void setBlock(@Nullable final Block block) {
+        this.block = block;
+    }
+
+    /**
+     * Gets the effect associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this effect is used in displaying the menu is entirely dependent upon the {@link MenuView}
+     * used to show the menu.
+     *
+     * @return the effect associated with this MenuItem or null if this menu item has no effect.
+     */
+    @Nullable
+    public Effect getEffect() {
+        return effect;
+    }
+
+    /**
+     * Sets the effect to be associated with this MenuItem, if any.
+     * <p/>
+     * Whether or not this effect is used in displaying the menu is entirely dependent upon the {@link MenuView}
+     * used to show the menu.
+     *
+     * @return the effect to be associated with this MenuItem or null if this menu item has no effect.
+     */
+    public void setEffect(@Nullable final Effect effect) {
+        this.effect = effect;
     }
 
     /** {@inheritDoc} */
