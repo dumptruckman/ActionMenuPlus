@@ -13,7 +13,7 @@ public class OneAtATimeSignView extends SignMenuView {
     }
 
     @Override
-    public void showMenu(@NotNull final Menu menu, @NotNull final Player viewer) {
+    public void updateView(@NotNull final Menu menu, @NotNull final Player viewer) {
         final MenuItem item = menu.getSelectedItem(viewer);
         if (item != null) {
             final String[] lines = item.getText().split("\n");

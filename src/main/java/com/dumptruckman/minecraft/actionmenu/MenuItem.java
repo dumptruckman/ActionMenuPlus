@@ -24,7 +24,7 @@ import java.util.Observable;
  * MenuItem cannot be set as the selected MenuItem of a Menu by any means.
  * <p/>
  * {@link java.util.Observer}s of this MenuItem will be notified any time a change occurs that may require a
- * {@link MenuView} to update via {@link MenuView#showMenu(Menu, org.bukkit.entity.Player)}.
+ * {@link MenuView} to update via {@link MenuView#updateView(Menu, org.bukkit.entity.Player)}.
  */
 public class MenuItem extends Observable implements Serializable {
 
@@ -62,7 +62,7 @@ public class MenuItem extends Observable implements Serializable {
      *
      * @param user the player that activated this MenuItem.
      */
-    public final void performAction(@NotNull final Player user) {
+    public final void performAction(@Nullable final Player user) {
         if (getAction() != null) {
             getAction().performAction(user);
         }

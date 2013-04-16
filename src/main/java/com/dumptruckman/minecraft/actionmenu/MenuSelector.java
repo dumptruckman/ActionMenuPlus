@@ -98,7 +98,7 @@ public final class MenuSelector implements Observer {
      * Selects the specified index.
      * <p/>
      * If the specified index is outside the bounds of the model or points to a non-selectable item, this will do
-     * nothing.
+     * nothing and the selection index will remain as it was.
      *
      * @param index the index to select.
      */

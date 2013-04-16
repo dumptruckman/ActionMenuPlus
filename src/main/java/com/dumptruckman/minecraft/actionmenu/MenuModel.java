@@ -5,12 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Contains the contents (menu items) of a Menu, selectable or otherwise.

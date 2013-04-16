@@ -26,7 +26,7 @@ public class BookMenuView implements MenuView {
     }
 
     @Override
-    public void showMenu(@NotNull final Menu menu, @NotNull final Player viewer) {
+    public void updateView(@NotNull final Menu menu, @NotNull final Player viewer) {
         final StringBuilder builder = new StringBuilder();
         builder.append(menu.getText());
         for (int i = 0; i < menu.getModel().size(); i++) {

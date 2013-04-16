@@ -45,7 +45,7 @@ public class TestPlugin extends JavaPlugin implements Listener {
                     if (view == null) {
                         view = new OneAtATimeSignView(sign);
                     }
-                    view.showMenu(menu, event.getPlayer());
+                    view.updateView(menu, event.getPlayer());
                 }
             }
         });
@@ -60,7 +60,7 @@ public class TestPlugin extends JavaPlugin implements Listener {
             menu.selectPrevious(event.getPlayer());
         }
         if (view != null) {
-            view.showMenu(menu, event.getPlayer());
+            view.updateView(menu, event.getPlayer());
         }
     }
 }
