@@ -26,6 +26,8 @@ import java.util.Observer;
  * {@link #selectPrevious()} while on the first selectable item of the model will cause the selection to roll over to
  * the last selectable item.  However, if {@link #isWrapping()} returns false, instead of the selection rolling over in
  * the previous circumstances, it will instead remain at the first or last item.
+ * <p/>
+ * Every selector starts with no current selection.
  */
 public final class MenuSelector implements Observer {
 
@@ -33,7 +35,7 @@ public final class MenuSelector implements Observer {
     private final MenuModel model;
     private final boolean wrapping;
 
-    private int index = 0;
+    private int index = -1;
 
     MenuSelector(@NotNull final MenuModel model, final boolean wrapping) {
         this.model = model;
@@ -127,6 +129,15 @@ public final class MenuSelector implements Observer {
             return model.get(index);
         }
         return null;
+    }
+
+    /**
+     * Clears the current selection of this selector.
+     * <p/>
+     * This will cause {@link #getSelectedItem()} to return null.
+     */
+    public void clearSelection() {
+        index = -1;
     }
 
     /**

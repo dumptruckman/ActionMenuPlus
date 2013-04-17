@@ -276,6 +276,17 @@ public class Menu extends MenuItem implements Iterable<MenuItem> {
     }
 
     /**
+     * Clears the current selection for the given user.
+     * <p/>
+     * This will cause {@link #getSelectedItem(org.bukkit.entity.Player)} to return null.
+     *
+     * @param user the user to clear the selection for.
+     */
+    public final void clearSelection(@NotNull final Player user) {
+        getSelector(user).clearSelection();
+    }
+
+    /**
      * Gets the selector for the given user.
      * <p/>
      * If this menu is not using multi-selector mode, this will always return the same object.  However, changing the
