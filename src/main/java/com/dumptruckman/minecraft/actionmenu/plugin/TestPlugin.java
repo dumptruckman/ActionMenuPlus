@@ -7,52 +7,35 @@
  */
 package com.dumptruckman.minecraft.actionmenu.plugin;
 
-import com.dumptruckman.minecraft.actionmenu.Menu;
 import com.dumptruckman.minecraft.actionmenu.MenuItem;
-import com.dumptruckman.minecraft.actionmenu.MenuView;
-import com.dumptruckman.minecraft.actionmenu.views.OneAtATimeSignView;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.block.Sign;
+import com.dumptruckman.minecraft.actionmenu.prefab.Menus;
+import com.dumptruckman.minecraft.actionmenu.prefab.SingleViewMenu;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 public class TestPlugin extends JavaPlugin implements Listener {
 
-    private final Menu menu = Menu.newMenu("Test Menu");
-    private MenuView view;
-    private Sign sign;
-    {
-        menu.getModel().add(new MenuItem("Explode\nSome\nShit"));
-        menu.getModel().add(new MenuItem("Option 2"));
-        menu.getModel().add(new MenuItem("Item with\nSome\n" + ChatColor.GOLD + "Color!\n" + ChatColor.RED + ChatColor.MAGIC + "WEEEE!!"));
-    }
+    SingleViewMenu menu;
 
     @Override
     public void onEnable() {
-        //getServer().getPluginManager().registerEvents(this, this);
+        menu = Menus.createSimpleInventoryMenu(this, "Test Menu", 9)
+                .addItem(new MenuItem("Test 1").setItemStack(new ItemStack(Material.WOOL)))
+                .addItem(new MenuItem("Test 2"))
+                .addItem(new MenuItem("WOOOHOOOOOO").setItemStack(new ItemStack(Material.DIAMOND)).setSelectable(false));
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void blockPlaced(@NotNull final SignChangeEvent event) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-            @Override
+    @EventHandler
+    public void playerJoin(final PlayerJoinEvent event) {
+        getServer().getScheduler().runTaskLater(this, new Runnable() {
             public void run() {
-                if (event.getBlock().getState() instanceof Sign) {
-                    sign = (Sign) event.getBlock().getState();
-                    if (view == null) {
-                        view = new OneAtATimeSignView(sign);
-                    }
-                    view.updateView(menu, event.getPlayer());
-                }
+                menu.updateView(menu, event.getPlayer());
             }
-        });
+        }, 40L);
     }
-
-
 }
