@@ -1,4 +1,6 @@
 /**
+ * Copyright (c) 2013. dumptruckman
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -11,7 +13,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class OneAtATimeSignView extends SignMenuView {
+public class OneAtATimeSignView extends BlockStateView<Sign> {
 
     public OneAtATimeSignView(@NotNull final Sign sign) {
         super(sign);
@@ -24,16 +26,16 @@ public class OneAtATimeSignView extends SignMenuView {
             final String[] lines = item.getText().split("\n");
             for (int i = 0; i < 4; i++) {
                 if (i < lines.length) {
-                    getSign().setLine(i, lines[i]);
+                    getBlockState().setLine(i, lines[i]);
                 } else {
-                    getSign().setLine(i, "");
+                    getBlockState().setLine(i, "");
                 }
             }
         } else {
             for (int i = 0; i < 4; i++) {
-                getSign().setLine(i, "");
+                getBlockState().setLine(i, "");
             }
         }
-        updateSign(viewer);
+        update(viewer);
     }
 }

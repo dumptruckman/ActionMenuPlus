@@ -1,4 +1,6 @@
 /**
+ * Copyright (c) 2013. dumptruckman
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -6,25 +8,25 @@
 package com.dumptruckman.minecraft.actionmenu.views;
 
 import com.dumptruckman.minecraft.actionmenu.MenuView;
-import org.bukkit.block.Sign;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class SignMenuView implements MenuView {
+public abstract class BlockStateView<S extends BlockState> implements MenuView {
 
     @NotNull
-    private final Sign sign;
+    private final S blockState;
 
-    protected SignMenuView(@NotNull final Sign sign) {
-        this.sign = sign;
+    protected BlockStateView(@NotNull final S blockState) {
+        this.blockState = blockState;
     }
 
     @NotNull
-    public final Sign getSign() {
-        return sign;
+    public final S getBlockState() {
+        return blockState;
     }
 
-    public final void updateSign(@NotNull final Player viewer) {
-        sign.update(true);
+    public void update(@NotNull final Player viewer) {
+        blockState.update(true);
     }
 }

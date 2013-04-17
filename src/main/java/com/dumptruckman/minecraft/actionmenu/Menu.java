@@ -1,4 +1,6 @@
 /**
+ * Copyright (c) 2013. dumptruckman
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -383,30 +385,30 @@ public class Menu extends MenuItem implements Iterable<MenuItem> {
     @NotNull
     @Override
     public Menu setText(@NotNull final String text) {
-        return (Menu) super.setText(text);    //To change body of overridden methods use File | Settings | File Templates.
+        return (Menu) super.setText(text);
     }
 
     /** {@inheritDoc} */
     @Override
     public Menu setImage(@Nullable final Image image) {
-        return (Menu) super.setImage(image);    //To change body of overridden methods use File | Settings | File Templates.
+        return (Menu) super.setImage(image);
     }
 
     /** {@inheritDoc} */
     @Override
     public Menu setItemStack(@Nullable final ItemStack itemStack) {
-        return (Menu) super.setItemStack(itemStack);    //To change body of overridden methods use File | Settings | File Templates.
+        return (Menu) super.setItemStack(itemStack);
     }
 
     /** {@inheritDoc} */
     @Override
     public Menu setBlock(@Nullable final Block block) {
-        return (Menu) super.setBlock(block);    //To change body of overridden methods use File | Settings | File Templates.
+        return (Menu) super.setBlock(block);
     }
 
     /** {@inheritDoc} */
     @Override
     public Menu setEffect(@Nullable final Effect effect) {
-        return (Menu) super.setEffect(effect);    //To change body of overridden methods use File | Settings | File Templates.
+        return (Menu) super.setEffect(effect);
     }
 }

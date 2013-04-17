@@ -1,4 +1,6 @@
 /**
+ * Copyright (c) 2013. dumptruckman
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -17,7 +19,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,11 +39,6 @@ public class TestPlugin extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void playerInteract(@NotNull final PlayerInteractEvent event) {
-
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
     public void blockPlaced(@NotNull final SignChangeEvent event) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
             @Override
@@ -58,16 +54,5 @@ public class TestPlugin extends JavaPlugin implements Listener {
         });
     }
 
-    @EventHandler
-    public void itemChange(@NotNull final PlayerItemHeldEvent event) {
-        if ((event.getNewSlot() > event.getPreviousSlot() && !(event.getPreviousSlot() == 0 && event.getNewSlot() == 8))
-                || (event.getNewSlot() == 0 && event.getPreviousSlot() == 8)) {
-            menu.selectNext(event.getPlayer());
-        } else if (event.getNewSlot() < event.getPreviousSlot() || (event.getNewSlot() == 8 && event.getPreviousSlot() == 0)) {
-            menu.selectPrevious(event.getPlayer());
-        }
-        if (view != null) {
-            view.updateView(menu, event.getPlayer());
-        }
-    }
+
 }
