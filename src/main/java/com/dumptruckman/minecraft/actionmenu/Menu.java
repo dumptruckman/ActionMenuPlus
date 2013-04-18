@@ -364,6 +364,16 @@ public class Menu extends MenuItem implements Iterable<MenuItem> {
     }
 
     /**
+     * Returns the number of menu items in this menu's model.
+     * If this model contains more than Integer.MAX_VALUE items, returns Integer.MAX_VALUE.
+     *
+     * @return the numbers of menu items in this menu's model.
+     */
+    public int size() {
+        return getModel().size();
+    }
+
+    /**
      * Performs the action defined by {@link MenuItem#getAction()} for the currently selected MenuItem for the given
      * user.
      * <p/>
