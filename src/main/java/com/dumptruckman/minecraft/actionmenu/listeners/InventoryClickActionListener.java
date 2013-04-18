@@ -26,8 +26,8 @@ public class InventoryClickActionListener<V extends InventoryView> extends Inven
                                         final boolean cancelAfter, final boolean ignoreCancelled,
                                         final boolean updateViewAfterEvent,
                                         @NotNull final InventoryAction inventoryAction,
-                                        final boolean alsoSelect) {
-        super(plugin, priority, cancelAfter, ignoreCancelled, updateViewAfterEvent, inventoryAction);
+                                        final boolean topInventory, final boolean alsoSelect) {
+        super(plugin, priority, cancelAfter, ignoreCancelled, updateViewAfterEvent, inventoryAction, topInventory);
         this.alsoSelect = alsoSelect;
     }
 

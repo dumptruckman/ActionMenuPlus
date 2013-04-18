@@ -32,12 +32,12 @@ public class Menus {
         final PluginManager pm = plugin.getServer().getPluginManager();
         if (!MENU_INVENTORY_CLICK_ACTION_LISTENERS.containsKey(plugin)) {
             pm.registerEvents(new PluginDisableListener(plugin), plugin);
-            InventoryClickActionListener listener = new InventoryClickActionListener(plugin, EventPriority.NORMAL, true, false, false, InventoryAction.RIGHT_CLICK, true);
+            InventoryClickActionListener listener = new InventoryClickActionListener(plugin, EventPriority.NORMAL, true, false, false, InventoryAction.RIGHT_CLICK, true, true);
             pm.registerEvents(listener, plugin);
             MENU_INVENTORY_CLICK_ACTION_LISTENERS.put(plugin, listener);
         }
         if (!MENU_INVENTORY_CLICK_SELECTION_LISTENERS.containsKey(plugin)) {
-            InventoryClickSelectionListener listener = new InventoryClickSelectionListener(plugin, EventPriority.NORMAL, true, false, false, InventoryAction.LEFT_CLICK);
+            InventoryClickSelectionListener listener = new InventoryClickSelectionListener(plugin, EventPriority.NORMAL, true, false, false, InventoryAction.LEFT_CLICK, true);
             pm.registerEvents(listener, plugin);
             MENU_INVENTORY_CLICK_SELECTION_LISTENERS.put(plugin, listener);
         }

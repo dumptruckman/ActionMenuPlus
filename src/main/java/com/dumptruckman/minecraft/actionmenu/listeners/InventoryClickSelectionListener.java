@@ -21,8 +21,9 @@ public class InventoryClickSelectionListener<V extends InventoryView> extends In
     public InventoryClickSelectionListener(@NotNull final Plugin plugin, @NotNull final EventPriority priority,
                                            final boolean cancelAfter, final boolean ignoreCancelled,
                                            final boolean updateViewAfterEvent,
-                                           @NotNull final InventoryAction inventoryAction) {
-        super(plugin, priority, cancelAfter, ignoreCancelled, updateViewAfterEvent, inventoryAction);
+                                           @NotNull final InventoryAction inventoryAction,
+                                           final boolean topInventory) {
+        super(plugin, priority, cancelAfter, ignoreCancelled, updateViewAfterEvent, inventoryAction, topInventory);
     }
 
     @Override
