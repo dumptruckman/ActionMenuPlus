@@ -2,17 +2,22 @@ package com.dumptruckman.minecraft.actionmenu.views;
 
 import com.dumptruckman.minecraft.actionmenu.Menu;
 import com.dumptruckman.minecraft.actionmenu.MenuItem;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 public class SingleClickInventoryView implements InventoryView {
 
     @NotNull
+    private final Plugin plugin;
+    @NotNull
     private final Inventory inventory;
 
-    public SingleClickInventoryView(@NotNull final Inventory inventory) {
+    public SingleClickInventoryView(@NotNull final Plugin plugin, @NotNull final Inventory inventory) {
+        this.plugin = plugin;
         this.inventory = inventory;
     }
 
@@ -46,6 +51,12 @@ public class SingleClickInventoryView implements InventoryView {
                 inv.clear(i);
             }
         }
-        viewer.openInventory(getInventory());
+        viewer.closeInventory();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                viewer.openInventory(getInventory());
+            }
+        });
     }
 }

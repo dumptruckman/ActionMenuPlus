@@ -41,7 +41,7 @@ public class Menus {
             pm.registerEvents(listener, plugin);
             MENU_INVENTORY_CLICK_SELECTION_LISTENERS.put(plugin, listener);
         }
-        SimpleInventoryMenu menu = new SimpleInventoryMenu(title, inventorySize);
+        SimpleInventoryMenu menu = new SimpleInventoryMenu(plugin, title, inventorySize);
         MENU_INVENTORY_CLICK_ACTION_LISTENERS.get(plugin).putView(menu, menu);
         MENU_INVENTORY_CLICK_SELECTION_LISTENERS.get(plugin).putView(menu, menu);
         return menu;
