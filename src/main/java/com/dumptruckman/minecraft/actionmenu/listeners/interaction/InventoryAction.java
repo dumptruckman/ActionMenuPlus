@@ -12,7 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 public enum InventoryAction {
     LEFT_CLICK, RIGHT_CLICK,
-    SHIFT_LEFT_CLICK, SHIFT_RIGHT_CLICK;
+    SHIFT_LEFT_CLICK, SHIFT_RIGHT_CLICK,
+    ALL_CLICK, ALL_NON_SHIFT_CLICK, ALL_SHIFT_CLICK;
 
     public boolean isActionSame(@NotNull final InventoryClickEvent event) {
         switch (this) {
@@ -24,6 +25,12 @@ public enum InventoryAction {
                 return event.isLeftClick() && event.isShiftClick();
             case SHIFT_RIGHT_CLICK:
                 return event.isRightClick() && event.isShiftClick();
+            case ALL_CLICK:
+                return true;
+            case ALL_NON_SHIFT_CLICK:
+                return !event.isShiftClick();
+            case ALL_SHIFT_CLICK:
+                return event.isShiftClick();
             default:
                 return false;
         }

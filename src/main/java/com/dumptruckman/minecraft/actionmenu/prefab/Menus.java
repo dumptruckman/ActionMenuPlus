@@ -24,26 +24,26 @@ import java.util.Map;
 public class Menus {
 
     private static final Map<Plugin, InventoryClickActionListener> MENU_INVENTORY_CLICK_ACTION_LISTENERS = new HashMap<Plugin, InventoryClickActionListener>();
-    private static final Map<Plugin, InventoryClickSelectionListener> MENU_INVENTORY_CLICK_SELECTION_LISTENERS = new HashMap<Plugin, InventoryClickSelectionListener>();
-
+    //private static final Map<Plugin, InventoryClickSelectionListener> MENU_INVENTORY_CLICK_SELECTION_LISTENERS = new HashMap<Plugin, InventoryClickSelectionListener>();
 
     public static SingleViewMenu createSimpleInventoryMenu(@NotNull final Plugin plugin, @NotNull final String title,
                                                            final int inventorySize) {
         final PluginManager pm = plugin.getServer().getPluginManager();
         if (!MENU_INVENTORY_CLICK_ACTION_LISTENERS.containsKey(plugin)) {
             pm.registerEvents(new PluginDisableListener(plugin), plugin);
-            InventoryClickActionListener listener = new InventoryClickActionListener(plugin, EventPriority.NORMAL, true, false, false, InventoryAction.RIGHT_CLICK, true, true);
+            InventoryClickActionListener listener = new InventoryClickActionListener(plugin, EventPriority.NORMAL, true, false, false, InventoryAction.ALL_CLICK, true, true);
             pm.registerEvents(listener, plugin);
             MENU_INVENTORY_CLICK_ACTION_LISTENERS.put(plugin, listener);
         }
+        /*
         if (!MENU_INVENTORY_CLICK_SELECTION_LISTENERS.containsKey(plugin)) {
             InventoryClickSelectionListener listener = new InventoryClickSelectionListener(plugin, EventPriority.NORMAL, true, false, false, InventoryAction.LEFT_CLICK, true);
             pm.registerEvents(listener, plugin);
             MENU_INVENTORY_CLICK_SELECTION_LISTENERS.put(plugin, listener);
-        }
+        }*/
         SimpleInventoryMenu menu = new SimpleInventoryMenu(plugin, title, inventorySize);
         MENU_INVENTORY_CLICK_ACTION_LISTENERS.get(plugin).putView(menu, menu);
-        MENU_INVENTORY_CLICK_SELECTION_LISTENERS.get(plugin).putView(menu, menu);
+        //MENU_INVENTORY_CLICK_SELECTION_LISTENERS.get(plugin).putView(menu, menu);
         return menu;
     }
 
