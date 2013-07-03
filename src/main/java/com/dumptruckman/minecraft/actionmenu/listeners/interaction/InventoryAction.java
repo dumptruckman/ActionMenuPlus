@@ -7,6 +7,7 @@
  */
 package com.dumptruckman.minecraft.actionmenu.listeners.interaction;
 
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,19 +19,19 @@ public enum InventoryAction {
     public boolean isActionSame(@NotNull final InventoryClickEvent event) {
         switch (this) {
             case LEFT_CLICK:
-                return event.isLeftClick() && !event.isShiftClick();
+                return event.getClick() == ClickType.LEFT;
             case RIGHT_CLICK:
-                return event.isRightClick() && !event.isShiftClick();
+                return event.getClick() == ClickType.RIGHT;
             case SHIFT_LEFT_CLICK:
-                return event.isLeftClick() && event.isShiftClick();
+                return event.getClick() == ClickType.SHIFT_LEFT;
             case SHIFT_RIGHT_CLICK:
-                return event.isRightClick() && event.isShiftClick();
+                return event.getClick() == ClickType.SHIFT_RIGHT;
             case ALL_CLICK:
                 return true;
             case ALL_NON_SHIFT_CLICK:
-                return !event.isShiftClick();
+                return (event.getClick() != ClickType.SHIFT_LEFT) && (event.getClick() != ClickType.SHIFT_RIGHT);
             case ALL_SHIFT_CLICK:
-                return event.isShiftClick();
+                return (event.getClick() == ClickType.SHIFT_LEFT) || (event.getClick() == ClickType.SHIFT_RIGHT);
             default:
                 return false;
         }
