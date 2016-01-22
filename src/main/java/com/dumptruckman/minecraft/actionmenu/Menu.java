@@ -350,6 +350,24 @@ public class Menu extends MenuItem implements Iterable<MenuItem> {
     }
 
     /**
+     * Sets the menu item at the given index.
+     * <p/>
+     * This will replace any previous items at that index. If the size of the Menu does not support the given index
+     * then blank menu items will be added to fill the missing space.
+     *
+     * @param index the index to set the menu item of.
+     * @param item the menu item to set at the given index.
+     * @return this menu for method chaining.
+     */
+    public Menu setItem(final int index, @NotNull final MenuItem item) {
+        while (index >= getModel().size()) {
+            addItem(new MenuItem());
+        }
+        getModel().set(index, item);
+        return this;
+    }
+
+    /**
      * Gets the menu item at the specified index.
      *
      * @param index the index of the item to retrieve.
